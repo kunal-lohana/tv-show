@@ -7,6 +7,12 @@
         <v-layout row wrap>
           <tv-show-skeleton v-for="i in 10" :key="i" />
         </v-layout>
+        <div id="tv-show-skeleton-card" v-for="i in 5" :key="i">
+          <v-divider class="mx-4 mt-5"></v-divider>
+          <v-layout row wrap>
+            <tv-show-skeleton v-for="i in 5" :key="i" />
+          </v-layout>
+        </div>
       </div>
       <v-layout row wrap v-else>
         <TvShow
@@ -16,27 +22,17 @@
         />
       </v-layout>
 
-      <div v-if="!genres.length">
-        <div id="tv-show-skeleton-card" v-for="i in 5" :key="i">
-          <v-divider class="mx-4 mt-5"></v-divider>
-          <v-layout row wrap>
-            <tv-show-skeleton v-for="i in 5" :key="i" />
-          </v-layout>
-        </div>
-      </div>
-      <div v-else>
-        <div v-for="genre in genres" :key="genre" class="genre-list">
-          <v-divider class="mx-4 mt-3"></v-divider>
-          <v-card-title>{{ genre }}</v-card-title>
-          <v-layout row wrap>
-            <TvShow
-              v-for="data in getGenresSel(genre)"
-              :key="data.id"
-              :showData="data"
-              :showGenre="Boolean(false)"
-            />
-          </v-layout>
-        </div>
+      <div v-for="genre in genres" :key="genre" class="genre-list">
+        <v-divider class="mx-4 mt-3"></v-divider>
+        <v-card-title>{{ genre }}</v-card-title>
+        <v-layout row wrap>
+          <TvShow
+            v-for="data in getGenresSel(genre)"
+            :key="data.id"
+            :showData="data"
+            :showGenre="Boolean(false)"
+          />
+        </v-layout>
       </div>
     </v-container>
   </div>
@@ -49,6 +45,7 @@ import ShowSlideImage from "@/components/ShowSlideImage/ShowSlideImage";
 import ShowSlideImageSkeleton from "@/components/ShowSlideImage/ShowSlideImage.skeleton.vue";
 import TvShow from "@/components/TvShow/TvShow";
 import TvShowSkeleton from "@/components/TvShow/TvShow.skeleton.vue";
+import { EventBus } from "@/components/EventBus.js";
 export default {
   name: "TVShowList",
   components: {
@@ -61,15 +58,12 @@ export default {
     return {
       showData: [],
       currentPageData: [],
-      skeletionCount: 7,
-      genresCategory: []
+      genresCategory: [],
+      searchData: [],
+      imageData: []
     };
   },
   computed: {
-    imageData() {
-      const imageData = this.currentPageData.slice(0, 7);
-      return imageData.map(data => data.image.medium) || [];
-    },
     genres() {
       return (
         this.currentPageData.reduce((acc, data) => {
@@ -78,8 +72,33 @@ export default {
       );
     }
   },
+  watch: {
+    searchData(newVal, oldVal) {
+      if (newVal.length && newVal != oldVal) {
+        this.imageData = [];
+        this.currentPageData = newVal;
+      }
+    },
+    currentPageData(newVal, oldVal) {
+      if (newVal.length && newVal != oldVal) {
+        const imageData = this.currentPageData.slice(0, 7);
+        const filterData = imageData.filter(
+          data => data.image && data.image.medium
+        );
+        this.imageData = filterData.map(el => el.image.medium) || [];
+      }
+    }
+  },
+  mounted() {
+    EventBus.$on("search-query-event", searchObj => {
+      this.searchData = searchObj.map(data => data.show);
+    });
+  },
   created() {
     this.handleSelect();
+  },
+  beforeDestroy() {
+    EventBus.$off("search-query-event");
   },
   methods: {
     async handleSelect() {
@@ -88,9 +107,10 @@ export default {
       });
       if (response) {
         this.showData = response.data.slice(0, 10);
-        this.currentPageData = this.showData.sort(({rating : r1}, {rating: r2}) => {
-          return r2.average -r1.average;
-        }
+        this.currentPageData = this.showData.sort(
+          ({ rating: r1 }, { rating: r2 }) => {
+            return r2.average - r1.average;
+          }
         );
       }
     },
