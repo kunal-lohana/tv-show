@@ -54,9 +54,10 @@
       <v-divider class="mx-4"></v-divider>
       <v-row>
         <v-col cols="6">
-          <v-card-title max-width="100" class="d-inline-block text-truncate">{{
+          <v-card-title class="d-inline-block text-truncate">{{
             constant.SCHEDULE_AVAILABILITY
-          }}</v-card-title>
+          }}
+          </v-card-title>
           <v-breadcrumbs divider="-">
             <v-breadcrumbs-item :items="showDescription.schedule.time">
               {{ showDescription.schedule.time }}
@@ -66,9 +67,17 @@
             </v-breadcrumbs-item>
           </v-breadcrumbs>
         </v-col>
-        <v-col cols="6">
+        <v-divider
+            class="my-4"
+            inset
+            vertical
+          ></v-divider>
+        
+        <v-col cols="5">
           <v-card-title>
             {{ constant.OFFICIAL_SITE }}
+            </v-card-title>
+            <v-card-actions class="pa-4 ">
             <a
               class="pl-2"
               d-inline
@@ -77,7 +86,7 @@
             >
               {{ showDescription.name }}
             </a>
-          </v-card-title>
+            </v-card-actions>
         </v-col>
       </v-row>
     </div>
