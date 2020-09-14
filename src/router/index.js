@@ -29,11 +29,6 @@ const routes = [
         name: "showDetail",
         meta: {
           title: "Show Detail"
-        },
-        beforeEnter: (to, from, next) => {
-          const showId = Number.parseInt(to.params.showId, 10);
-          if (Number.isNaN(showId)) next({ name: "PageNotFound" });
-          else next();
         }
       }
     ]
