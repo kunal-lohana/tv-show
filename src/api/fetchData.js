@@ -8,11 +8,11 @@ export const fetchData = ({ apiName, params }) => {
     },
     Api = {
       getTvShowList: params => requests.get(`shows`, params),
-      getTvShowDetail: params => requests.get(`shows/${params.id}`, params),
-      getCastDetail: params =>
-        requests.get(`shows/${params.id}?embed=${params.embed}`, params),
-      getEpisodesDetail: params =>
-        requests.get(`shows/${params.id}/episodes`, params),
+      getTvShowDetail: params =>
+        requests.get(
+          `shows/${params.id}?embed[]=episodes&embed[]=cast`,
+          params
+        ),
       searchShow: params =>
         requests.get(`/search/shows?q=${params.query}`, params)
     };
