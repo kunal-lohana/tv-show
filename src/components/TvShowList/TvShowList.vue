@@ -94,14 +94,15 @@ export default {
       this.searchData = searchObj.map(data => data.show);
     });
   },
-  created() {
-    this.handleSelect();
+  async created() {
+    await this.getShowData();
   },
   beforeDestroy() {
     EventBus.$off("search-query-event");
   },
   methods: {
-    async handleSelect() {
+    async getShowData() {
+      
       const response = await fetchData({
         apiName: TV_SHOW_List
       });
@@ -115,10 +116,10 @@ export default {
       }
     },
     getGenresSel(genre) {
-      if (genre && this.currentPageData.length)
-        return (
-          this.currentPageData.filter(data => data.genres.includes(genre)) || []
-        );
+      if (genre && this.currentPageData.length) {
+        return this.currentPageData.filter(data => data.genres.includes(genre)) || [];
+      }
+      return [];
     }
   }
 };
