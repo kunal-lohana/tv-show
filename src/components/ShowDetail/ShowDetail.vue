@@ -183,6 +183,7 @@ export default {
           apiName: TV_SHOW_DETAIL,
           params: { id: id }
         });
+
         if (response && response.data) {
           this.showDescription = response.data;
           this.castDetails =
@@ -190,10 +191,8 @@ export default {
             [];
           this.episodeDetails =
             response.data._embedded.episodes.slice(0, 10) || [];
-          debugger;
           this.loading = false;
         } else {
-          this.loading = false;
           this.$router.push({ name: "PageNotFound" });
         }
       } catch (error) {

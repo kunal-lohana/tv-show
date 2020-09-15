@@ -36,7 +36,6 @@
 <script>
 import { fetchData } from "@/api/fetchData.js";
 import { SEARCH_SHOW } from "@/api/apiName.js";
-import { EventBus } from "@/components/EventBus.js";
 export default {
   name: "Header",
   data() {
@@ -54,7 +53,8 @@ export default {
         });
         if (response.data.length) {
           this.searchedData = response.data;
-          EventBus.$emit("search-query-event", this.searchedData);
+          this.$emit("searchInput", this.searchedData);
+          // EventBus.$emit("search-query-event", this.searchedData);
         }
       }
     }

@@ -1,9 +1,9 @@
 <template>
   <v-carousel cycle height="300" hide-delimiter-background show-arrows-on-hover>
-    <v-carousel-item v-for="data in showImage" :key="data">
+    <v-carousel-item v-for="data in showImage" :key="data.id">
       <v-sheet height="100%">
         <v-row class="fill-height" align="center" justify="center">
-          <v-img :src="data" class="white--text align-end"></v-img>
+          <v-img :src="data.image" class="white--text align-end"></v-img>
         </v-row>
       </v-sheet>
     </v-carousel-item>

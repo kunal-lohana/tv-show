@@ -1,92 +1,126 @@
-import {shallowMount, createLocalVue, config} from '@vue/test-utils';
-import TvShowListComponent from "@/components/TvShowList/TvShowList.vue"
-import vuetify from 'vuetify';
-import ShowSlideImage from "@/components/ShowSlideImage/ShowSlideImage";
-import ShowSlideImageSkeleton from "@/components/ShowSlideImage/ShowSlideImage.skeleton.vue";
-import TvShow from "@/components/TvShow/TvShow";
-import TvShowSkeleton from "@/components/TvShow/TvShow.skeleton.vue";
-import {fetchData} from "@/api/fetchData.js";
+import { shallowMount, createLocalVue, config } from "@vue/test-utils";
+import TvShowListComponent from "@/components/TvShowList/TvShowList.vue";
+import Vue from "vue";
+import Vuetify from "vuetify";
+import { fetchData } from "@/api/fetchData.js";
 import { TV_SHOW_List } from "@/api/apiName.js";
-import {currentPageData as showData, genresCategory} from "./testingData";
+import {
+  currentPageData,
+  genresCategory,
+  searchData,
+  showData
+} from "./testingData";
 
-config.showDeprecationWarnings = false
+config.showDeprecationWarnings = false;
 
+Vue.config.slient = false;
 
-jest.mock("@/api/fetchData.js",  () => ({
-    fetchData:  jest.fn()
-}))
+jest.mock("@/api/fetchData.js", () => ({
+  fetchData: jest.fn(() => true)
+}));
+Vue.use(Vuetify);
+describe("TvShowList Component", () => {
+  let wrapper;
+  let localVue = createLocalVue();
 
-describe('TvShowList Component', () => {
-    let  wrapper;
-    let localVue = createLocalVue();
-    beforeEach(() => {
-        localVue.use(vuetify);
-        wrapper = shallowMount(TvShowListComponent, {
-          localVue,
-          propsData: {},
-          data: {
-            showData: [],
-            currentPageData: [],
-            genresCategory: [],
-            searchData: [],
-            imageData: []
-          },
-          stubs: ['tv-show',
-            'show-slide-image',
-            'show-slide-image-skeleton',
-            'tv-show-skeleton'
-          ],
-        });
-        jest.resetModules();
-        jest.clearAllMocks();
+  const spyGetGenresSel = jest.spyOn(
+    TvShowListComponent.methods,
+    "getGenresSel"
+  );
+  beforeEach(() => {
+    wrapper = shallowMount(TvShowListComponent, {
+      localVue,
+      propsData: {},
+      data() {
+        return {
+          showData: [],
+          currentPageData: [],
+          genresCategory: [],
+          searchData: [],
+          imageData: []
+        };
+      }
     });
-    
-    
-    
-    
-      it('is a Vue instance', () => {
-        expect(wrapper.isVueInstance).toBeTruthy();
-      })
+    jest.resetModules();
+    jest.clearAllMocks();
+  });
 
-      it('Created lifecycle hook, call getShowData() method and provide tv-show data',  async () => {
-        fetchData.mockImplementationOnce( async () => {
-          const currentPageData =  await require('./testingData').currentPageData;  
-          return {data : currentPageData}
-        });
-        const result = await fetchData({
-          apiName: TV_SHOW_List
-        });
-        wrapper.vm.currentPageData = result
-        expect(wrapper.vm.currentPageData.data.length).toEqual(1);
+  it("is a Vue instance", () => {
+    expect(wrapper.isVueInstance).toBeTruthy();
+  });
+
+  it("Created lifecycle hook, call getShowData() method and provide tv-show data", async () => {
+    fetchData.mockImplementationOnce(async () => {
+      const currentPageData = await require("./testingData").currentPageData;
+      return { data: currentPageData };
+    });
+    const result = await fetchData({
+      apiName: TV_SHOW_List
+    });
+    wrapper.vm.currentPageData = result;
+    expect(wrapper.vm.currentPageData.data.length).toEqual(1);
+  });
+
+  describe("Method getGenresSel return passed genres data", () => {
+    it("getGenresSel return empty array if genre not passed ", () => {
+      const localThis = {
+        currentPageData: []
+      };
+      expect(spyGetGenresSel.call(localThis)).toEqual([]);
+    });
+    it("getGenresSel return empty array if currentPageData data prop is empty ", () => {
+      const localThis = {
+        currentPageData: []
+      };
+      const result = spyGetGenresSel.call(localThis, "Drama");
+      expect(result).toEqual([]);
+    });
+    it("getGenresSel return genres if genre category and currentPageData prop. passed", async () => {
+      await wrapper.setData({
+        currentPageData: currentPageData
       });
-      
-      describe('Method getGenresSel return passed genres data', () => {
-        // it('return empty array if genre not passed ', () => {
-        //   const result = wrapper.vm.getGenresSel();
-        //   expect(result).toEqual([]);
-        // })
-        // it('return empty array if currentPageData data prop. not empty ', () => {
-          // const result = wrapper.vm.getGenresSel('Drama');
-          // expect(result).toEqual([]);
-        // })
-        it(' return genres if genre category and currentPageData prop. passed', async () => {
-          const localData = {
-            currentPageData : showData
-          }
-          // wrapper.vm.currentPageData= showData;
-          const result = await wrapper.vm.getGenresSel.call(localData, 'Drama');
-          console.log('result', result);
-          // expect(result).toEqual(showData)
-        })
-        
-      })
-      it('Default data property of ShowList', () => {
-          expect(wrapper.vm.showData.length).toBe(0);
-          expect(wrapper.vm.currentPageData.length).toBe(0);
-          expect(wrapper.vm.genresCategory.length).toBe(0);
-          expect(wrapper.vm.searchData.length).toBe(0);
-          expect(wrapper.vm.imageData.length).toBe(0);
-      })
-      
-    
+      const result = await wrapper.vm.getGenresSel("Action");
+      expect(result).toEqual(currentPageData);
+    });
+    it("validateImage method return object which has medium attr in image", async () => {
+      const result = wrapper.vm.validateImage(showData);
+      expect(result).toEqual(currentPageData);
+    });
+  });
+
+  describe("watch Property - searchProp", () => {
+    it("searchProp watcher update currentPageData data prop.", async () => {
+      await wrapper.setProps({
+        searchProp: searchData
+      });
+      const result = await wrapper.vm.validateImage(wrapper.vm.searchProp);
+      expect(wrapper.vm.currentPageData).toEqual(result);
+    });
+
+    it("currentPageData watcher update carosuel imageData and filter out images", done => {
+      wrapper.setData({
+        currentPageData: currentPageData
+      });
+      wrapper.vm.$nextTick(() => {
+        expect(wrapper.vm.imageData.length).toBe(1);
+        done();
+      });
+    });
+  });
+
+  describe("computed Property", () => {
+    it("compute genre title", () => {
+      wrapper.setData({
+        currentPageData: currentPageData
+      });
+      expect(wrapper.vm.genres).toStrictEqual(genresCategory);
+    });
+
+    it("compute genre title return blank array if currentPageData data prop. is empty", () => {
+      wrapper.setData({
+        currentPageData: []
+      });
+      expect(wrapper.vm.genres).toStrictEqual([]);
+    });
+  });
 });

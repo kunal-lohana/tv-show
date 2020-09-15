@@ -45,7 +45,6 @@ import ShowSlideImage from "@/components/ShowSlideImage/ShowSlideImage";
 import ShowSlideImageSkeleton from "@/components/ShowSlideImage/ShowSlideImage.skeleton.vue";
 import TvShow from "@/components/TvShow/TvShow";
 import TvShowSkeleton from "@/components/TvShow/TvShow.skeleton.vue";
-import { EventBus } from "@/components/EventBus.js";
 export default {
   name: "TVShowList",
   components: {
@@ -54,59 +53,59 @@ export default {
     ShowSlideImageSkeleton,
     TvShowSkeleton
   },
+  props: {
+    searchProp: {
+      type: [Array, Object],
+      default() {
+        return [];
+      },
+      required: false
+    }
+  },
   data() {
     return {
       showData: [],
       currentPageData: [],
       genresCategory: [],
-      searchData: [],
       imageData: []
     };
   },
   computed: {
     genres() {
-      return (
-        this.currentPageData.reduce((acc, data) => {
+      if (this.currentPageData.length) {
+        return this.currentPageData.reduce((acc, data) => {
           return [...new Set(Array.prototype.concat(acc, data.genres))];
-        }, []) || []
-      );
+        }, []);
+      } else return [];
     }
   },
   watch: {
-    searchData(newVal, oldVal) {
+    searchProp(newVal, oldVal) {
       if (newVal.length && newVal != oldVal) {
         this.imageData = [];
-        this.currentPageData = newVal;
+        this.currentPageData = this.validateImage(newVal);
       }
     },
     currentPageData(newVal, oldVal) {
       if (newVal.length && newVal != oldVal) {
         const imageData = this.currentPageData.slice(0, 7);
-        const filterData = imageData.filter(
-          data => data.image && data.image.medium
-        );
-        this.imageData = filterData.map(el => el.image.medium) || [];
+        const filterData = this.validateImage(imageData);
+        this.imageData = filterData.map(el => ({
+          image: el.image.medium,
+          id: el.id
+        }));
       }
     }
-  },
-  mounted() {
-    EventBus.$on("search-query-event", searchObj => {
-      this.searchData = searchObj.map(data => data.show);
-    });
   },
   async created() {
     await this.getShowData();
   },
-  beforeDestroy() {
-    EventBus.$off("search-query-event");
-  },
   methods: {
     async getShowData() {
-      
       const response = await fetchData({
         apiName: TV_SHOW_List
       });
-      if (response) {
+      if (response && response.data) {
         this.showData = response.data.slice(0, 10);
         this.currentPageData = this.showData.sort(
           ({ rating: r1 }, { rating: r2 }) => {
@@ -116,10 +115,15 @@ export default {
       }
     },
     getGenresSel(genre) {
-      if (genre && this.currentPageData.length) {
-        return this.currentPageData.filter(data => data.genres.includes(genre)) || [];
+      if (genre && this.currentPageData && this.currentPageData.length) {
+        return (
+          this.currentPageData.filter(data => data.genres.includes(genre)) || []
+        );
       }
       return [];
+    },
+    validateImage(data) {
+      return data.filter(ele => ele.image && ele.image.medium);
     }
   }
 };

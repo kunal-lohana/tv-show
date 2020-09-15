@@ -6,23 +6,33 @@
         :src="showData.image.medium"
         class="white--text align-end"
       >
-        <v-card-title>{{ showData.name }}</v-card-title>
+        <v-card-title id="data-test-tvshow-name">{{
+          showData.name
+        }}</v-card-title>
       </v-img>
       <div>
         <v-card-text :class="['pa-2', { show_genre: showGenre }]">
-          <p class="text-break card-genre" v-if="showGenre">
+          <p
+            class="text-break card-genre"
+            id="data-test-tv-genre"
+            v-if="showGenre"
+          >
             {{ showData.genres.join(",") }}
           </p>
           <div>
             <v-icon color="amber">mdi-star</v-icon> |
-            <span class="pr-1">{{ showData.rating.average }}</span>
-            <span class="pr-1">, {{ showData.language }}</span>
+            <span class="pr-1" id="data-test-tv-rating">{{
+              showData.rating.average
+            }}</span>
+            <span class="pr-1" id="data-test-tv-language"
+              >, {{ showData.language }}</span
+            >
             <span class="pr-1">, {{ showData.premiered.split("-")[0] }}</span>
           </div>
         </v-card-text>
       </div>
       <v-card-actions class="justify-center">
-        <v-btn text @click="showDetail(showData)">
+        <v-btn class="tvshow-detail-btn" text @click="showDetail(showData)">
           {{ constant.SHOW_DETAILS_BTN }}
         </v-btn>
       </v-card-actions>
