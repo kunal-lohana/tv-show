@@ -1,6 +1,6 @@
 <template>
   <v-main app class="secondary" dark>
-    <Header @searchInput="updateSearchInput()" />
+    <Header @searchInput="updateSearchInput($event)" />
     <router-view :searchProp="searchInput" />
   </v-main>
 </template>

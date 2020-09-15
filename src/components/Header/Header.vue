@@ -54,7 +54,7 @@ export default {
         if (response.data.length) {
           this.searchedData = response.data;
           this.$emit("searchInput", this.searchedData);
-          // EventBus.$emit("search-query-event", this.searchedData);
+          this.searchInput="";
         }
       }
     }
