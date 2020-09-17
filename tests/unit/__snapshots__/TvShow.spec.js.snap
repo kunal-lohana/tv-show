@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tv Show Component should match snapshot 1`] = `
+<v-flex-stub tag="div" xs6="" sm4="" md3="" lg3="" class="pa-4">
+  <v-card-stub loaderheight="4" tag="div" color="secondary" width="200" dark="true" app="" class="tv_show_card">
+    <v-img-stub height="200" options="[object Object]" position="center center" src="asdfsd" transition="fade-transition" data-test="tv-show-image" class="white--text align-end">
+      <v-card-title-stub id="data-test-tvshow-name">Cops</v-card-title-stub>
+    </v-img-stub>
+    <div>
+      <v-card-text-stub id="data-test-genre-class" class=" 0 1">
+        <p id="data-test-tv-genre" class="text-break card-genre">
+          Action,Drama
+        </p>
+        <div>
+          <v-icon-stub color="amber" datatest="rating-icon" data-test="rating-icon">mdi-star</v-icon-stub> |
+          <span id="data-test-tv-rating" class="pr-1">7</span> <span id="data-test-tv-language" class="pr-1">, English</span> <span id="data-test-tv-premiered" class="pr-1">, 1989</span>
+        </div>
+      </v-card-text-stub>
+    </div>
+    <v-card-actions-stub class="justify-center">
+      <v-btn-stub rounded="true" tag="button" activeclass="" text="true" type="button" class="tvshow-detail-btn"><a text="" color="secondary" data-test="constant-showDetailBtn" class="text-decoration-none">
+          Show Details
+        </a></v-btn-stub>
+    </v-card-actions-stub>
+  </v-card-stub>
+</v-flex-stub>
+`;

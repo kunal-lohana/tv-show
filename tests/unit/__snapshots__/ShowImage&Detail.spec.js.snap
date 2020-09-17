@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Show Image and Detail Component  should match snapshot 1`] = `
+<v-flex-stub tag="div" xs6="" sm4="" md3="" lg3="" class="pa-4">
+  <v-card-stub loaderheight="4" tag="div" color="secondary" width="200" dark="true" app="">
+    <v-tooltip-stub opendelay="0" closedelay="0" contentclass="" bottom="true" fixed="true" openonhover="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" tag="span"> <span></span></v-tooltip-stub>
+  </v-card-stub>
+</v-flex-stub>
+`;

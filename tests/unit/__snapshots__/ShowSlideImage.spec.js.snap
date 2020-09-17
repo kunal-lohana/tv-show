@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Show Image Component  should match snapshot 1`] = `
+<v-carousel-stub activeclass="v-window-item--active" mandatory="true" continuous="true" nexticon="$next" previcon="$prev" showarrows="true" showarrowsonhover="true" cycle="true" delimitericon="$delimiter" height="300" hidedelimiterbackground="true" interval="6000">
+  <v-carousel-item-stub><a text="" color="secondary" class="text-decoration-none">
+      <v-sheet-stub height="100%" tag="div">
+        <v-row-stub tag="div" align="center" justify="center" class="fill-height">
+          <v-img-stub options="[object Object]" position="center center" src="http://static.tvmaze.com/uploads/images/medium_portrait/1/4185.jpg" transition="fade-transition" data-test="show-slide-image" class="white--text align-end"></v-img-stub>
+        </v-row-stub>
+      </v-sheet-stub>
+    </a></v-carousel-item-stub>
+  <v-carousel-item-stub><a text="" color="secondary" class="text-decoration-none">
+      <v-sheet-stub height="100%" tag="div">
+        <v-row-stub tag="div" align="center" justify="center" class="fill-height">
+          <v-img-stub options="[object Object]" position="center center" src="http://static.tvmaze.com/uploads/images/medium_portrait/1/4185.jpg" transition="fade-transition" data-test="show-slide-image" class="white--text align-end"></v-img-stub>
+        </v-row-stub>
+      </v-sheet-stub>
+    </a></v-carousel-item-stub>
+</v-carousel-stub>
+`;

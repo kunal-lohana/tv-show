@@ -3,10 +3,11 @@
     <div v-if="loading">
       <show-detail-skeleton />
     </div>
-    <div v-else-if="!loading">
+    <div v-else>
       <v-row justify="center" align="center">
         <v-col cols="12" md="4" align="center">
           <v-img
+            data-test="show-image"
             class="d-flex d-md-none"
             height="300"
             :src="showDescription.image.medium"
@@ -20,7 +21,7 @@
         </v-col>
         <v-col cols="12" md="8" align="center">
           <v-card-text>
-            <v-card-title class=" justify-center">{{
+            <v-card-title data-test="show-name" class=" justify-center">{{
               showDescription.name
             }}</v-card-title>
             <v-rating
@@ -32,12 +33,14 @@
               size="14"
             ></v-rating>
             <div class="grey--text ml-4">
-              <span>{{ showDescription.rating.average / 2 }} (5)</span>
+              <span data-test="show-rating"
+                >{{ showDescription.rating.average / 2 }} (5)</span
+              >
             </div>
-            <div class="my-2 subtitle-1">
+            <div class="my-2 subtitle-1" data-test="show-genre">
               {{ showDescription.genres.join(",") }}
             </div>
-            <div class="my-2 subtitle-1">
+            <div class="my-2 subtitle-1" data-test="show-language">
               {{ showDescription.language }}
             </div>
           </v-card-text>
@@ -48,8 +51,13 @@
         <v-col cols="12">
           <v-divider class="mx-4"></v-divider>
           <v-card-text>
-            <v-card-title class="pl-0">{{ constant.DESCRIPTION }}</v-card-title>
-            <span v-html="showDescription.summary"></span>
+            <v-card-title class="pl-0" data-test="constant-description">{{
+              constant.DESCRIPTION
+            }}</v-card-title>
+            <span
+              data-test="show-summary"
+              v-html="showDescription.summary"
+            ></span>
           </v-card-text>
         </v-col>
       </v-row>
@@ -57,14 +65,22 @@
       <v-divider class="mx-4"></v-divider>
       <v-row>
         <v-col cols="6">
-          <v-card-title class="d-inline-block text-truncate"
+          <v-card-title
+            class="d-inline-block text-truncate"
+            data-test="constant-schedule"
             >{{ constant.SCHEDULE_AVAILABILITY }}
           </v-card-title>
           <v-breadcrumbs divider="-">
-            <v-breadcrumbs-item :items="showDescription.schedule.time">
+            <v-breadcrumbs-item
+              data-test="show-time"
+              :items="showDescription.schedule.time"
+            >
               {{ showDescription.schedule.time }}
             </v-breadcrumbs-item>
-            <v-breadcrumbs-item :items="showDescription.schedule.days">
+            <v-breadcrumbs-item
+              data-test="show-days"
+              :items="showDescription.schedule.days"
+            >
               {{ showDescription.schedule.days.join(",") }}
             </v-breadcrumbs-item>
           </v-breadcrumbs>
@@ -72,7 +88,7 @@
         <v-divider class="my-4" inset vertical></v-divider>
 
         <v-col cols="5">
-          <v-card-title>
+          <v-card-title data-test="constant-site">
             {{ constant.OFFICIAL_SITE }}
           </v-card-title>
           <v-card-actions class="pa-4 ">
@@ -92,7 +108,7 @@
     <v-row>
       <v-col cols="12">
         <v-divider class="mx-4"></v-divider>
-        <v-card-title>
+        <v-card-title data-test="constant-cast">
           {{ constant.CAST }}
         </v-card-title>
 
@@ -120,7 +136,7 @@
     <v-row>
       <v-col cols="12">
         <v-divider class="mx-4"></v-divider>
-        <v-card-title>
+        <v-card-title data-test="constant-episodes">
           {{ constant.EPISODES }}
         </v-card-title>
         <div v-if="loading">
@@ -170,10 +186,7 @@ export default {
     };
   },
   async created() {
-    const showId = this.$route.params.showId;
-    if (showId) {
-      await this.getShowDetails(showId);
-    }
+    await this.getShowDetails(this.$route.params.showId);
   },
   methods: {
     async getShowDetails(id) {
@@ -183,21 +196,19 @@ export default {
           apiName: TV_SHOW_DETAIL,
           params: { id: id }
         });
-
         if (response && response.data) {
           this.showDescription = response.data;
-          this.castDetails =
-            (await this.validateCasteDetails(response.data._embedded.cast)) ||
-            [];
-          this.episodeDetails =
-            response.data._embedded.episodes.slice(0, 10) || [];
+          this.castDetails = await this.validateCasteDetails(
+            response.data._embedded.cast
+          );
+          this.episodeDetails = response.data._embedded.episodes.slice(0, 10);
           this.loading = false;
         } else {
-          this.$router.push({ name: "PageNotFound" });
+          this.loading = false;
         }
       } catch (error) {
-        console.log("Network Error:", error);
-        this.$router.push({ name: "PageNotFound" });
+        this.loading = false;
+        this.$router.push({ name: "PageNotFound" }).catch(() => {});
       }
     },
     validateCasteDetails(caste) {

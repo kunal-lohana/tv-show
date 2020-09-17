@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Component  should match snapshot 1`] = `
+<v-app-stub id="app">
+  <v-main-stub tag="main" app="" dark="" class="secondary">
+    <header-stub></header-stub>
+    <router-view-stub name="default" searchprop=""></router-view-stub>
+  </v-main-stub>
+</v-app-stub>
+`;

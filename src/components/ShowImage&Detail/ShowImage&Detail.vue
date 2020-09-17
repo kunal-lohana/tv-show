@@ -8,6 +8,7 @@
             v-on="on"
             height="200"
             :src="data.image.medium"
+            data-test="show-slide-image"
             class="white--text align-end"
           >
             <v-card-title>{{ data.name }}</v-card-title>

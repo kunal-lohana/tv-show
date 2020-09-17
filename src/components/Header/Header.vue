@@ -1,9 +1,14 @@
 <template>
   <v-app-bar app color="secondary" dark>
     <div class="d-flex align-center">
-      <v-icon @click="$route.path != '/' ? $router.push('/') : true"
-        >mdi-home</v-icon
+      <v-btn
+        icon
+        class="inline teal--text data-test-home-btn"
+        @click.native="homeRoute()"
       >
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+
       <v-img
         alt="Tvm Logo"
         class="shrink ml-3"
@@ -22,6 +27,7 @@
             max-width="50"
             name="search"
             label="Search..."
+            data-test="SearchText"
             v-model="searchInput"
             clearable
             prepend-inner-icon="mdi-magnify"
@@ -54,9 +60,12 @@ export default {
         if (response.data.length) {
           this.searchedData = response.data;
           this.$emit("searchInput", this.searchedData);
-          this.searchInput="";
+          this.searchInput = "";
         }
       }
+    },
+    homeRoute() {
+      return this.$route.path != "/" ? this.$router.push("/") : true;
     }
   }
 };

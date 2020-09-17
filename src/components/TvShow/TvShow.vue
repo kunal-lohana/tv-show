@@ -3,6 +3,7 @@
     <v-card class="tv_show_card" app color="secondary" dark width="200">
       <v-img
         height="200"
+        data-test="tv-show-image"
         :src="showData.image.medium"
         class="white--text align-end"
       >
@@ -11,7 +12,10 @@
         }}</v-card-title>
       </v-img>
       <div>
-        <v-card-text :class="['pa-2', { show_genre: showGenre }]">
+        <v-card-text
+          id="data-test-genre-class"
+          :class="['pa-2', { show_genre: showGenre }]"
+        >
           <p
             class="text-break card-genre"
             id="data-test-tv-genre"
@@ -20,20 +24,36 @@
             {{ showData.genres.join(",") }}
           </p>
           <div>
-            <v-icon color="amber">mdi-star</v-icon> |
+            <v-icon color="amber" data-test="rating-icon">{{
+              ratingIcon
+            }}</v-icon>
+            |
             <span class="pr-1" id="data-test-tv-rating">{{
               showData.rating.average
             }}</span>
             <span class="pr-1" id="data-test-tv-language"
               >, {{ showData.language }}</span
             >
-            <span class="pr-1">, {{ showData.premiered.split("-")[0] }}</span>
+            <span class="pr-1" id="data-test-tv-premiered"
+              >, {{ showData.premiered.split("-")[0] }}</span
+            >
           </div>
         </v-card-text>
       </div>
       <v-card-actions class="justify-center">
-        <v-btn class="tvshow-detail-btn" text @click="showDetail(showData)">
-          {{ constant.SHOW_DETAILS_BTN }}
+        <v-btn class="tvshow-detail-btn" rounded text>
+          <router-link
+            text
+            class="text-decoration-none"
+            color="secondary"
+            :to="{
+              name: 'showDetail',
+              params: { showId: showData.id }
+            }"
+            data-test="constant-showDetailBtn"
+          >
+            {{ constant.SHOW_DETAILS_BTN }}
+          </router-link>
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -59,16 +79,9 @@ export default {
   },
   data() {
     return {
-      constant: Constants
+      constant: Constants,
+      ratingIcon: "mdi-star"
     };
-  },
-  methods: {
-    showDetail(data) {
-      const { name, id } = data;
-      this.$route.params.showName = name;
-      this.$route.params.showid = Number(id);
-      this.$router.push(`/${name}/${id}`);
-    }
   }
 };
 </script>
