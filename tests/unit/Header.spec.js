@@ -40,6 +40,16 @@ describe("Header Component ", () => {
     expect(result).toBeTruthy();
   });
 
+  it("watch $route.params, when router params changes and set data props", async () => {
+    const wrapper = mount(HeaderComponent, {
+      router,
+      localVue,
+      vuetify
+    });
+    await router.push("/2");
+    expect(wrapper.vm.searchData).toBeFalsy();
+  });
+
   it("check the input value in search input box", async () => {
     const wrapper = mount(HeaderComponent, {
       localVue,

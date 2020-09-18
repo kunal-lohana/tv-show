@@ -24,7 +24,7 @@ describe("Show Detail Component ", () => {
   let localVue = createLocalVue();
   localVue.use(VueRouter);
   Vue.use(Vuetify);
-  let vuetify= new Vuetify();
+  let vuetify = new Vuetify();
 
   const router = new VueRouter({
     routes
@@ -54,8 +54,8 @@ describe("Show Detail Component ", () => {
       constant: Constants,
       loading: false,
       castDetails: castDetails,
-      episodeDetails: showDescription._embedded.episodes,
-    })
+      episodeDetails: showDescription._embedded.episodes
+    });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -213,7 +213,7 @@ describe("Show Detail Component ", () => {
   });
 
   it("getShowDetails method call and fetchData return blank array, navigate to pagenotfound", async () => {
-    const spyMethod = jest.spyOn(ShowDetailComponent.methods, "getShowDetails")
+    const spyMethod = jest.spyOn(ShowDetailComponent.methods, "getShowDetails");
     const wrapper = mount(ShowDetailComponent, {
       router,
       localVue,

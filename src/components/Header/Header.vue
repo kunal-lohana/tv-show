@@ -20,7 +20,7 @@
     </div>
 
     <v-spacer></v-spacer>
-    <v-container>
+    <v-container v-if="showSearchBox">
       <v-row class="justify-end">
         <v-col cols="8">
           <v-text-field
@@ -47,8 +47,14 @@ export default {
   data() {
     return {
       searchInput: "",
-      searchedData: []
+      searchedData: [],
+      showSearchBox: true
     };
+  },
+  watch: {
+    "$route.params"(params) {
+      this.showSearchBox = !params.showId;
+    }
   },
   methods: {
     async getSearchQuery() {

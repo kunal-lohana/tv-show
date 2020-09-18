@@ -195,7 +195,7 @@ export const castDetails = [
     },
     _links: { self: { href: "http://api.tvmaze.com/people/271" } }
   }
-]
+];
 export const validateCaste = [
   {
     person: {
