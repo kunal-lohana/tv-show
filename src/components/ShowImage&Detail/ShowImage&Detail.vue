@@ -11,10 +11,10 @@
             data-test="show-slide-image"
             class="white--text align-end"
           >
-            <v-card-title>{{ data.name }}</v-card-title>
+            <v-card-title data-test="show-name">{{ data.name }}</v-card-title>
           </v-img>
         </template>
-        <span v-html="data.summary"></span>
+        <span data-test="show-summary" v-html="data.summary"></span>
       </v-tooltip>
     </v-card>
   </v-flex>

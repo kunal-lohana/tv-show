@@ -1,5 +1,5 @@
-import { shallowMount, config, createLocalVue } from "@vue/test-utils";
-import { imageData } from "./testingData";
+import { shallowMount, mount, config, createLocalVue } from "@vue/test-utils";
+import { showImageDetail } from "./testingData";
 import Vuetify from "vuetify";
 import Vue from "vue";
 import ShowImageDetail from "@/components/ShowImage&Detail/ShowImage&Detail.vue";
@@ -9,7 +9,6 @@ Vue.config.slient = false;
 
 describe("Show Image and Detail Component ", () => {
   let localVue = createLocalVue();
-  localVue.use(Vuetify);
   Vue.use(Vuetify);
   let vuetify;
   beforeEach(() => {
@@ -21,7 +20,7 @@ describe("Show Image and Detail Component ", () => {
       localVue,
       vuetify,
       propsData: {
-        data: imageData
+        data: showImageDetail
       }
     });
     expect(wrapper.html()).toMatchSnapshot();
@@ -29,37 +28,43 @@ describe("Show Image and Detail Component ", () => {
 
   it("set prop. data", async () => {
     const wrapper = shallowMount(ShowImageDetail, {
-      localVue,
-      vuetify
+      localVue
     });
     await wrapper.setProps({
-      data: imageData
+      data: showImageDetail
     });
-    expect(wrapper.vm.data.length).toBe(imageData.length);
+    expect(wrapper.vm.data.length).toBe(showImageDetail.length);
+  });
+
+  it("validate name ", () => {
+    const wrapper = mount(ShowImageDetail, {
+      localVue,
+      propsData: {
+        data: showImageDetail
+      }
+    });
+    const name = wrapper.find('[data-test="show-name"]');
+    expect(name.text()).toBe(showImageDetail.name);
+  });
+
+  it("check summary of show ", () => {
+    const wrapper = shallowMount(ShowImageDetail, {
+      localVue,
+      propsData: {
+        data: showImageDetail
+      }
+    });
+    const summary = wrapper.find('[data-test="show-summary"]');
+    expect(summary.text()).toBe("Good to Go");
   });
 
   it("check data prop. data", () => {
     const wrapper = shallowMount(ShowImageDetail, {
       localVue,
-      vuetify,
       propsData: {
-        data: imageData
+        data: showImageDetail
       }
     });
-    expect(wrapper.vm.data.length).toBe(imageData.length);
-  });
-
-  it("check image url ", () => {
-    const wrapper = shallowMount(ShowImageDetail, {
-      localVue,
-      vuetify,
-      propsData: {
-        data: imageData
-      }
-    });
-    const imageUrl = wrapper
-      .find('[data-test="show-slide-image"]')
-      .attributes("src");
-    expect(imageUrl).toEqual(imageData[0].image);
+    expect(wrapper.vm.data.length).toBe(showImageDetail.length);
   });
 });

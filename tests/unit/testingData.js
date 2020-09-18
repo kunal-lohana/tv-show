@@ -646,3 +646,12 @@ export const imageData = [
     image: "http://static.tvmaze.com/uploads/images/medium_portrait/1/4185.jpg"
   }
 ];
+
+export const showImageDetail = {
+  id: 123,
+  image: {
+    medium: "http://static.tvmaze.com/uploads/images/medium_portrait/1/4185.jpg"
+  },
+  name: "cops",
+  summary: "<p>Good to Go</p>"
+};

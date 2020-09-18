@@ -64,19 +64,7 @@
 import { Constants } from "@/Constant/index";
 export default {
   name: "TVShow",
-  props: {
-    showData: {
-      type: [Array, Object],
-      default() {
-        return {};
-      }
-    },
-    showGenre: {
-      type: Boolean,
-      default: true,
-      required: false
-    }
-  },
+  props: ["showData", "showGenre"],
   data() {
     return {
       constant: Constants,

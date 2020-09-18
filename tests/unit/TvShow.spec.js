@@ -54,7 +54,8 @@ describe("Tv Show Component", () => {
       localVue,
       router,
       propsData: {
-        showData: show
+        showData: show,
+        showGenre: true
       },
       stubs: {
         RouterLink: RouterLinkStub

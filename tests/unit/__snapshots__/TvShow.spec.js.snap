@@ -8,11 +8,10 @@ exports[`Tv Show Component should match snapshot 1`] = `
     </v-img-stub>
     <div>
       <v-card-text-stub id="data-test-genre-class" class=" 0 1">
-        <p id="data-test-tv-genre" class="text-break card-genre">
-          Action,Drama
-        </p>
+        <!---->
         <div>
-          <v-icon-stub color="amber" datatest="rating-icon" data-test="rating-icon">mdi-star</v-icon-stub> |
+          <v-icon-stub color="amber" datatest="rating-icon" data-test="rating-icon">mdi-star</v-icon-stub>
+          |
           <span id="data-test-tv-rating" class="pr-1">7</span> <span id="data-test-tv-language" class="pr-1">, English</span> <span id="data-test-tv-premiered" class="pr-1">, 1989</span>
         </div>
       </v-card-text-stub>
