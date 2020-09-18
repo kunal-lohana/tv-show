@@ -178,7 +178,24 @@ export const showDescription = {
     ]
   }
 };
-
+export const castDetails = [
+  {
+    id: 271,
+    url: "http://www.tvmaze.com/people/271/stephen-amell",
+    name: "Stephen Amell",
+    country: { name: "Canada", code: "CA", timezone: "America/Halifax" },
+    birthday: "1981-05-08",
+    deathday: null,
+    gender: "Male",
+    image: {
+      medium:
+        "http://static.tvmaze.com/uploads/images/medium_portrait/42/106974.jpg",
+      original:
+        "http://static.tvmaze.com/uploads/images/original_untouched/42/106974.jpg"
+    },
+    _links: { self: { href: "http://api.tvmaze.com/people/271" } }
+  }
+]
 export const validateCaste = [
   {
     person: {

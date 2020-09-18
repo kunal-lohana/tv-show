@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Show Detail Component  should match snapshot 1`] = `
+<v-card-stub loaderheight="4" tag="div" color="secondary" dark="true" app="" class="mx-auto my-12">
+  <div>
+    <v-row-stub tag="div" align="center" justify="center">
+      <v-col-stub cols="12" md="4" tag="div" align="center">
+        <v-img-stub height="300" options="[object Object]" position="center center" src="http://static.tvmaze.com/uploads/images/medium_portrait/1/4185.jpg" transition="fade-transition" data-test="show-image" class="d-flex d-md-none"></v-img-stub>
+        <v-img-stub height="300" width="300" options="[object Object]" position="center center" src="http://static.tvmaze.com/uploads/images/medium_portrait/1/4185.jpg" transition="fade-transition" class="d-none d-md-flex"></v-img-stub>
+      </v-col-stub>
+      <v-col-stub cols="12" md="8" tag="div" align="center">
+        <v-card-text-stub>
+          <v-card-title-stub datatest="show-name" data-test="show-name" class=" justify-center">Cops</v-card-title-stub>
+          <v-rating-stub color="amber" opendelay="0" closedelay="0" ripple="true" backgroundcolor="accent" dense="true" emptyicon="$ratingEmpty" fullicon="$ratingFull" halficon="$ratingHalf" halfincrements="true" length="5" readonly="true" size="14" value="3.9"></v-rating-stub>
+          <div class="grey--text ml-4"><span data-test="show-rating">3.9 (5)</span></div>
+          <div data-test="show-genre" class="my-2 subtitle-1">
+            Action,Crime
+          </div>
+          <div data-test="show-language" class="my-2 subtitle-1">
+            English
+          </div>
+        </v-card-text-stub>
+      </v-col-stub>
+    </v-row-stub>
+    <v-row-stub tag="div">
+      <v-col-stub cols="12" tag="div">
+        <v-divider-stub class="mx-4"></v-divider-stub>
+        <v-card-text-stub>
+          <v-card-title-stub datatest="constant-description" data-test="constant-description" class="pl-0">Description</v-card-title-stub> <span data-test="show-summary"><p><b>COPS</b> follows police officers, constables, and sheriff's deputies during patrols and various police activities by embedding camera crews with their units. The show's formula adheres to a classic <i>cinéma vérité</i> ethos. With no narration or scripted dialog, it depends entirely on the commentary of the officers and on the actions of the people with whom they come into contact.</p></span>
+        </v-card-text-stub>
+      </v-col-stub>
+    </v-row-stub>
+    <v-divider-stub class="mx-4"></v-divider-stub>
+    <v-row-stub tag="div">
+      <v-col-stub cols="6" tag="div">
+        <v-card-title-stub datatest="constant-schedule" data-test="constant-schedule" class="d-inline-block text-truncate">Schedule
+        </v-card-title-stub>
+        <v-breadcrumbs-stub divider="-" items="">
+          <v-breadcrumbs-item-stub activeclass="v-breadcrumbs__item--disabled" data-test="show-time" items="22:30">
+            22:30
+          </v-breadcrumbs-item-stub>
+          <v-breadcrumbs-item-stub activeclass="v-breadcrumbs__item--disabled" data-test="show-days" items="Monday">
+            Monday
+          </v-breadcrumbs-item-stub>
+        </v-breadcrumbs-stub>
+      </v-col-stub>
+      <v-divider-stub inset="true" vertical="true" class="my-4"></v-divider-stub>
+      <v-col-stub cols="5" tag="div">
+        <v-card-title-stub datatest="constant-site" data-test="constant-site">
+          Offical Site
+        </v-card-title-stub>
+        <v-card-actions-stub class="pa-4 "><a d-inline="" target="_blank" href="http://www.cops.com" class="pl-2">
+            Cops
+          </a></v-card-actions-stub>
+      </v-col-stub>
+    </v-row-stub>
+  </div>
+  <v-row-stub tag="div">
+    <v-col-stub cols="12" tag="div">
+      <v-divider-stub class="mx-4"></v-divider-stub>
+      <v-card-title-stub datatest="constant-cast" data-test="constant-cast">
+        Cast
+      </v-card-title-stub>
+      <div>
+        <v-container-stub tag="div" grid-list-xs="">
+          <v-layout-stub tag="div" row="" wrap="">
+            <show-cast-detail-stub data="[object Object]"></show-cast-detail-stub>
+          </v-layout-stub>
+        </v-container-stub>
+      </div>
+    </v-col-stub>
+  </v-row-stub>
+  <v-row-stub tag="div">
+    <v-col-stub cols="12" tag="div">
+      <v-divider-stub class="mx-4"></v-divider-stub>
+      <v-card-title-stub datatest="constant-episodes" data-test="constant-episodes">
+        Episodes
+      </v-card-title-stub>
+      <div>
+        <v-container-stub tag="div" grid-list-xs="">
+          <v-layout-stub tag="div" row="" wrap="">
+            <show-cast-detail-stub data="[object Object]"></show-cast-detail-stub>
+            <show-cast-detail-stub data="[object Object]"></show-cast-detail-stub>
+          </v-layout-stub>
+        </v-container-stub>
+      </div>
+    </v-col-stub>
+  </v-row-stub>
+</v-card-stub>
+`;

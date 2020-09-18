@@ -1,5 +1,5 @@
-import { mount, config, createLocalVue } from "@vue/test-utils";
-import { showDescription, validateCaste } from "./testingData";
+import { shallowMount, mount, config, createLocalVue } from "@vue/test-utils";
+import { showDescription, validateCaste, castDetails } from "./testingData";
 import Vuetify from "vuetify";
 import Vue from "vue";
 import VueRouter from "vue-router";
@@ -24,13 +24,12 @@ describe("Show Detail Component ", () => {
   let localVue = createLocalVue();
   localVue.use(VueRouter);
   Vue.use(Vuetify);
-  let vuetify;
+  let vuetify= new Vuetify();
 
   const router = new VueRouter({
     routes
   });
   beforeEach(() => {
-    vuetify = new Vuetify();
     wrapper = mount(ShowDetailComponent, {
       router,
       localVue,
@@ -44,13 +43,33 @@ describe("Show Detail Component ", () => {
       }
     });
   });
-
-  // afterEach(()=>{
-  //   jest.resetAllMocks();
-  //   jest.clearAllMocks();
-  // })
+  it("should match snapshot", async () => {
+    const wrapper = shallowMount(ShowDetailComponent, {
+      router,
+      localVue,
+      vuetify
+    });
+    await wrapper.setData({
+      showDescription: showDescription,
+      constant: Constants,
+      loading: false,
+      castDetails: castDetails,
+      episodeDetails: showDescription._embedded.episodes,
+    })
+    expect(wrapper.html()).toMatchSnapshot();
+  });
 
   it("check show name", async () => {
+    const wrapper = shallowMount(ShowDetailComponent, {
+      router,
+      localVue,
+      vuetify,
+      data() {
+        return {
+          showDescription: showDescription
+        };
+      }
+    });
     await wrapper.setData({
       loading: false
     });
@@ -194,24 +213,18 @@ describe("Show Detail Component ", () => {
   });
 
   it("getShowDetails method call and fetchData return blank array, navigate to pagenotfound", async () => {
-    await wrapper.setData({
-      loading: false
+    const spyMethod = jest.spyOn(ShowDetailComponent.methods, "getShowDetails")
+    const wrapper = mount(ShowDetailComponent, {
+      router,
+      localVue,
+      vuetify
     });
-    expect(wrapper.vm.loading).toBeFalsy();
-    await fetchData.mockImplementationOnce(async () => {
-      return { data: [] };
+    await wrapper.setData({
+      loading: false,
+      showDescription: showDescription
     });
     await wrapper.vm.getShowDetails();
-    expect(wrapper.vm.loading).toBeFalsy();
-  });
-
-  it("wrong api url reject the promise and navigate to pagenotfound page", async () => {
-    await wrapper.setData({
-      loading: false
-    });
-    expect(wrapper.vm.loading).toBeFalsy();
-    await fetchData.mockReturnValueOnce(Promise.reject("error"));
-    await wrapper.vm.getShowDetails();
+    expect(spyMethod).toHaveBeenCalled();
     expect(wrapper.vm.loading).toBeFalsy();
   });
 
