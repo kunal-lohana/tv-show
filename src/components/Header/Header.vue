@@ -26,7 +26,7 @@
           <v-text-field
             max-width="50"
             name="search"
-            label="Search..."
+            label="Search Showname..."
             data-test="SearchText"
             v-model="searchInput"
             clearable

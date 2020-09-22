@@ -73,8 +73,8 @@ export default {
   computed: {
     genres() {
       if (this.currentPageData.length) {
-        return this.currentPageData.reduce((acc, data) => {
-          return [...new Set(Array.prototype.concat(acc, data.genres))];
+        return this.currentPageData.reduce((acc, { genres }) => {
+          return [...new Set(Array.prototype.concat(acc, genres))];
         }, []);
       } else return [];
     }
